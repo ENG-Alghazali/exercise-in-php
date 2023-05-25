@@ -51,6 +51,9 @@ if (isset($_POST['delete'])) {
         header("refresh: 1");
     }
 }
+if (isset($_GET['get_id'])) {
+    $get_id = $_GET['get_id'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -72,26 +75,26 @@ if (isset($_POST['delete'])) {
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
 
-                <img src="bootstrap.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
-                Bootstrap
+                <img src="bootstrap.svg" alt="Logo" width="30" height="24" style="margin-right: 20px;"
+                    class="d-inline-block align-text-top">
+                Eng-Osama Exercise
             </a>
         </div>
     </nav>
     <div class="container" style="margin-top: 50px;">
         <?php
-
-        $insert = $conn->prepare("INSERT INTO `users` (user_name,user_number,user_email) VALUES ();");
         $view = $conn->prepare("SELECT * FROM `users` ");
         $view->execute();
         if ($view->rowCount() > 0) {
         ?>
-        <table class="table table-striped">
-            <thead>
+        <table class="table table-hover">
+            <thead class="table-dark">
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">User Name</th>
                     <th scope="col">User Number</th>
                     <th scope="col">User Email</th>
+                    <th scope="col">Update User</th>
                 </tr>
             </thead>
 
@@ -104,6 +107,9 @@ if (isset($_POST['delete'])) {
                     <td><?= $fitch_user['user_name']; ?></td>
                     <td><?= $fitch_user['user_number']; ?></td>
                     <td><?= $fitch_user['user_email']; ?></td>
+                    <td><a href="update.php?get_id=<?= $fitch_user['id'] ?>" class="btn btn-primary">
+                            Update
+                        </a></td>
 
                 </tr>
                 <?php } ?>
@@ -112,14 +118,19 @@ if (isset($_POST['delete'])) {
         </table>
         <?php
         } else {
-            echo '<p class="empty">لا توجد مؤسسات  بعد!</p>';
+            echo '<p class="empty" style="text-align: center;">لا يوجد عملاء بعد !</p>';
         }
         ?>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-            data-bs-whatever="@getbootstrap">Add User</button>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            Delete User
-        </button>
+
+        <div class="center" style="text-align: center; margin-top: 40px;">
+            <button type="button" class="btn btn-outline-primary " data-bs-toggle="modal" data-bs-target="#exampleModal"
+                data-bs-whatever="@getbootstrap">Add User</button>
+            <button type="button" class="btn btn-outline-primary" style="margin-left: 15px;" data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop">
+                Delete User
+            </button>
+        </div>
+
         <!-- Button trigger modal -->
         <div>
 
@@ -201,6 +212,9 @@ if (isset($_POST['delete'])) {
                                                 <button class="btn btn-primary" name="post" type="submit">ADD
                                                     USERS</button>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>
